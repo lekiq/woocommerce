@@ -2382,15 +2382,3 @@ body:not(.search-results) .twentysixteen .entry-summary {
 	background: inherit;
 	color: inherit;
 }
-
-/**
- * Twenty Twenty Five specific styles
- */
-body.theme-twentytwentyfive {
-    td.woocommerce-grouped-product-list-item__quantity {
-        a.product_type_variable {
-            padding-left: unset;
-            padding-right: unset;
-        }
-    }
-}

@@ -796,6 +796,9 @@ final class WooCommerce {
 				case 'twentytwentythree':
 					include_once WC_ABSPATH . 'includes/theme-support/class-wc-twenty-twenty-three.php';
 					break;
+				case 'twentytwentyfive':
+					include_once WC_ABSPATH . 'includes/theme-support/class-wc-twenty-twenty-five.php';
+					break;
 			}
 		}
 	}
