@@ -116,4 +116,43 @@ test.describe( 'WooCommerce Email Settings', () => {
 		await expect( page.locator( existingImageElement ) ).toBeHidden();
 		await expect( page.locator( newImageElement ) ).toBeVisible();
 	} );
+
+	test( 'See new color settings with a feature flag', async ( {
+		page,
+		baseURL,
+	} ) => {
+		// Disable the email_improvements feature flag
+		await setFeatureFlag( baseURL, 'no' );
+		await page.goto( 'wp-admin/admin.php?page=wc-settings&tab=email' );
+
+		await expect( page.getByText( 'Color palette' ) ).toHaveCount(0);
+		await expect( page.getByText( 'Accent' ) ).toHaveCount(0);
+		await expect( page.getByText( 'Email background' ) ).toHaveCount(0);
+		await expect( page.getByText( 'Content background' ) ).toHaveCount(0);
+		await expect( page.getByText( 'Heading & text' ) ).toHaveCount(0);
+		await expect( page.getByText( 'Secondary text' ) ).toHaveCount(0);
+
+		await expect( page.getByText( 'Base color' ) ).toBeVisible();
+		await expect( page.getByText( 'Background color' ) ).toBeVisible();
+		await expect( page.getByText( 'Body background color' ) ).toBeVisible();
+		await expect( page.getByText( 'Body text color' ) ).toBeVisible();
+		await expect( page.getByText( 'Footer text color' ) ).toBeVisible();
+
+		// Enable the email_improvements feature flag
+		await setFeatureFlag( baseURL, 'yes' );
+		await page.reload();
+
+		await expect( page.getByText( 'Color palette' ) ).toBeVisible();
+		await expect( page.getByText( 'Accent' ) ).toBeVisible();
+		await expect( page.getByText( 'Email background' ) ).toBeVisible();
+		await expect( page.getByText( 'Content background' ) ).toBeVisible();
+		await expect( page.getByText( 'Heading & text' ) ).toBeVisible();
+		await expect( page.getByText( 'Secondary text' ) ).toBeVisible();
+
+		await expect( page.getByText( 'Base color' ) ).toHaveCount(0);
+		await expect( page.getByText( 'Background color' ) ).toHaveCount(0);
+		await expect( page.getByText( 'Body background color' ) ).toHaveCount(0);
+		await expect( page.getByText( 'Body text color' ) ).toHaveCount(0);
+		await expect( page.getByText( 'Footer text color' ) ).toHaveCount(0);
+	} );
 } );
